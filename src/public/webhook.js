@@ -1,10 +1,20 @@
+var requests = { };
+
+function onRequestClicked(str) {
+    var message = requests[parseInt(str)];
+    $('pre').html(JSON.stringify(JSON.parse(message.body), null, 2));
+}
+
 jQuery(document).ready(function () {
-    var requests = { };
+    
+    var itemCount = 0;
     
     setGetParameter();
     
 	var log_webhook_message = function  (message, type) {
-		var li = jQuery('<li />').text(message.type + ' ' + message.url);
+        itemCount++;
+        requests[itemCount] = message;
+		var li = jQuery('<li onclick="onRequestClicked(this.id)" id="' + itemCount + ' " />').text(message.type + ' ' + message.url + ' (' + message.body.length + ' bytes)');
 		
 		if (type === 'system') {
 			li.css({'font-weight': 'bold'});
@@ -16,22 +26,6 @@ jQuery(document).ready(function () {
 	};
 
 	var socket = io.connect(':3000');
-
-//	socket.on('entrance', function  (data) {
-//		log_webhook_message(data.message, 'system');
-//	});
-//
-//	socket.on('exit', function  (data) {
-//		log_webhook_message(data.message, 'leave');
-//	});
-//
-//	socket.on('webhook', function  (data) {
-//		log_webhook_message(data.message, 'normal');
-//	});
-//
-//	socket.on('error', function  (data) {
-//		log_webhook_message(data.message, 'error');
-//	});
 
     socket.on('requestData', function  (data) {
         
@@ -46,14 +40,7 @@ jQuery(document).ready(function () {
 		}
 	});
     
-   jQuery('#requestItems li').click(function() {
-        console.log('Item clicked');
-        alert('Clicked list. ');
-   });
-    
 });
-
-
 
 function setGetParameter() {
     var hookId = "hookId"

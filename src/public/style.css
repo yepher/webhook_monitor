@@ -1,3 +1,12 @@
+li:hover { 
+    background-color: #f1f1f1;
+    cursor: pointer  ;
+}
+
+.requestlist li {
+   border-bottom: 1px solid #f1f1f1;  
+}
+
 .headerText {
     width: auto;
     float: left;
@@ -49,14 +58,12 @@
 }
 
 .requestlist {
-    //background-color: green;
     float: left;
     height: 100%;
     width: 35%;
 }
 
 .requestcontent {
-    //background-color: blue;
     float: left;
     height: 100%;
     width: 64%;
