@@ -1,74 +1,37 @@
+<!-- 
+    Reference: http://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_divs
+-->
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="jquery-1.7.2.min.js"></script>
+<script src="webhook.js"></script>
 <script type="text/javascript" charset="utf-8">
-jQuery(document).ready(function () {
-    setGetParameter();
-    
-	var log_webhook_message = function  (message, type) {
-//		var li = jQuery('<li />').text(message);
-//		
-//		if (type === 'system') {
-//			li.css({'font-weight': 'bold'});
-//		} else if (type === 'leave' || type === 'error') {
-//			li.css({'font-weight': 'bold', 'color': '#F00'});
-//		}
-				
-		jQuery('#webhook_log').append(message + "\n");
-	};
 
-	var socket = io.connect(':3000');
-
-	socket.on('entrance', function  (data) {
-		log_webhook_message(data.message, 'system');
-	});
-
-	socket.on('exit', function  (data) {
-		log_webhook_message(data.message, 'leave');
-	});
-
-	socket.on('webhook', function  (data) {
-		log_webhook_message(data.message, 'normal');
-	});
-
-	socket.on('error', function  (data) {
-		log_webhook_message(data.message, 'error');
-	});
-
-	jQuery('#webhook_box').keypress(function (event) {
-		if (event.which == 13) {
-			socket.emit('webhook', {message: jQuery('#webhook_box').val()});
-			jQuery('#webhook_box').val('');
-		}
-	});
-});
-    
-function setGetParameter() {
-    var hookId = "hookId"
-    var url = window.location.href;
-    if (!(url.indexOf(hookId + "=") >= 0)) {
-        if (url.indexOf("?") < 0) {
-            url += "?" + hookId + "=" + Math.floor((Math.random() * 1000000) + 1);
-        } else {
-            url += "&" + hookId + "=" + Math.floor((Math.random() * 1000000) + 1);
-        }
-        
-        window.location.href = url;
-    }
-    
-}
 </script>
 
 </head>
 <body>
-    <div id="webhook_list">
-		
-	</div>
-    <div id="webhook_content">
-        <pre id="webhook_log">
-		</pre>
+    <h1>WebHook Viewer</h1>
+    <div class="container">
+        <div class="requestlist">
+            <div style="overflow:auto;">
+                <div class="headerText">Requests</div>
+            </div>
+            <div class="textareawrapper">
+                <ul id="requestItems">
+		        </ul>
+            </div>
+        </div>
+        <div class="requestcontent">
+            <div style="overflow:auto;">
+                <div class="headerText">Request Content:</div>
+            </div>
+            <pre id="webhook_log"></pre>
+        </div>
+        
+        <div class="footerText"> WebHook Viewer <a href="http://www.yepher.com">yepher.com</a></div>
     </div>
 
 </body>

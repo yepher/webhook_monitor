@@ -4,7 +4,11 @@ var io = require('socket.io'),
 var http = require('http');
 var qs = require('querystring');
 
-var app = connect().use(connect.static('public')).listen(3000);
+var websocktPort = 3000;
+var serverPort = 8080;
+
+
+var app = connect().use(connect.static('public')).listen(websocktPort);
 var webhook_room = io.listen(app);
 
 snooper.set_sockets(webhook_room.sockets);
@@ -18,31 +22,34 @@ webhook_room.sockets.on('connection', function (socket) {
 
 var formOutput = '<html><body>'
     + '<h1>WebHook Landing Page</h1>'
+    + 'View your data <a href=":8080">here</a>'
     + '</body></html>';
 
-var serverPort = 8124;
+
 http.createServer(function (request, response) {
-    webhook_room.sockets.emit('webhook', {message: "----------------------------------"});
-    webhook_room.sockets.emit('webhook', {message: new Date()});
-    webhook_room.sockets.emit('webhook', {message: request.method  + " " + request.url});
+    var requestData = {  };
+    requestData.body = '';
     
-    for(var item in request.headers) {
-        webhook_room.sockets.emit('webhook', {message: item + ": " + request.headers[item]});
-    }
-    webhook_room.sockets.emit('webhook', {message: "Body"});
+    // Build up the object that will be sent to clients via websocket
+    requestData.date = new Date();
+    requestData.type = request.method;
+    requestData.url = request.url
+    requestData.headers = request.headers;
+    requestData.remoteAddress = request.connection.remoteAddress;
     
-   if(request.method === "POST" || request.method === "PUT") {
-        webhook_room.sockets.emit('webhook', {message: request.body});  
-       var requestBody = '';
-      request.on('data', function(data) {
-        requestBody += data;
-      });
-      request.on('end', function() {
-        //var formData = qs.parse(requestBody);
-        webhook_room.sockets.emit('webhook', {message: requestBody});
-      });
+    var requestBody = '';
+    if(request.method === "POST" || request.method === "PUT") {
+        var requestBody = '';
+        request.on('data', function(data) {
+            requestBody += data;
+        });
        
-       
+        request.on('end', function() {
+            requestData.body = requestBody;
+            webhook_room.sockets.emit('requestData', {message: requestData});  
+      });
+    } else {
+        webhook_room.sockets.emit('requestData', {message: requestData});  
     }
     
     response.writeHead(200, {'Content-Type': 'text/html'});

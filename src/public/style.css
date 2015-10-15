@@ -1,34 +1,73 @@
-div#webhook_list {
-    height: 100%;
-    width: 25%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: red;
-
-    display: block;
-    border: 1px solid #999;
-    overflow: auto;
-    margin-bottom: 10px;
+.headerText {
+    width: auto;
+    float: left;
+    font-family: verdana;
+    font-size: 1em;
+    line-height: 2;
 }
 
-ul#webhook_log {
-    list-style: none;
-    position: relative;
-    //bottom: 0px;
-    overflow-y:scroll;
-    overflow:auto
-
+.footerText {
+    position: absolute;
+    bottom: 0;
+    font-family: verdana;
+    font-size: 0.8em;
+    width: 100%;
+    padding-right: 15px;
+    text-align: right;
+    height: 20px;
+    overflow: hidden;
 }
 
-div#webhook_content {
+.textareawrapper {
+    width: 100%;
+    height: 92%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+#requestItems {
+    background-color: #ffffff;
+    font-family: consolas,"courier new",monospace;
+    font-size: 15px;
     height: 100%;
     width: 100%;
-    //position: fixed;
-
-    background-color: green;
+    padding: 8px;
+    resize: none;
+    border: none;
 }
 
-input#webhook_box {
-    width: 99%;
+.container {
+    background-color: #f1f1f1;
+    width: 100%;
+    overflow: auto;
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    height: auto;
+    min-height: 250px;
+    min-width: 550px;
 }
+
+.requestlist {
+    //background-color: green;
+    float: left;
+    height: 100%;
+    width: 35%;
+}
+
+.requestcontent {
+    //background-color: blue;
+    float: left;
+    height: 100%;
+    width: 64%;
+}
+
+#webhook_log {
+    width: 100%;
+    height: 92%;
+    padding: 8px;
+    -webkit-overflow-scrolling: touch;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
