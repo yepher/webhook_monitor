@@ -1,5 +1,5 @@
 {
-  "name": "chat_room",
+  "name": "webhook",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -10,6 +10,6 @@
     "socket.io": "0.9.6",
     "connect": "1.9.2"
   },
-  "author": "Joe LeBlanc",
+  "author": "Chris Wilson",
   "license": "BSD"
 }

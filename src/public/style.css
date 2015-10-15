@@ -1,0 +1,34 @@
+div#webhook_list {
+    height: 100%;
+    width: 25%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: red;
+
+    display: block;
+    border: 1px solid #999;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+ul#webhook_log {
+    list-style: none;
+    position: relative;
+    //bottom: 0px;
+    overflow-y:scroll;
+    overflow:auto
+
+}
+
+div#webhook_content {
+    height: 100%;
+    width: 100%;
+    //position: fixed;
+
+    background-color: green;
+}
+
+input#webhook_box {
+    width: 99%;
+}

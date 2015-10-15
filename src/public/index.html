@@ -1,50 +1,51 @@
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="jquery-1.7.2.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 jQuery(document).ready(function () {
-    setGetParameter("Param1", "helloWorld");
+    setGetParameter();
     
-	var log_chat_message = function  (message, type) {
-		var li = jQuery('<li />').text(message);
-		
-		if (type === 'system') {
-			li.css({'font-weight': 'bold'});
-		} else if (type === 'leave' || type === 'error') {
-			li.css({'font-weight': 'bold', 'color': '#F00'});
-		}
+	var log_webhook_message = function  (message, type) {
+//		var li = jQuery('<li />').text(message);
+//		
+//		if (type === 'system') {
+//			li.css({'font-weight': 'bold'});
+//		} else if (type === 'leave' || type === 'error') {
+//			li.css({'font-weight': 'bold', 'color': '#F00'});
+//		}
 				
-		jQuery('#chat_log').append(li);
+		jQuery('#webhook_log').append(message + "\n");
 	};
 
-	var socket = io.connect('http://localhost:3000?id=123&key2=value2');
+	var socket = io.connect(':3000');
 
 	socket.on('entrance', function  (data) {
-		log_chat_message(data.message, 'system');
+		log_webhook_message(data.message, 'system');
 	});
 
 	socket.on('exit', function  (data) {
-		log_chat_message(data.message, 'leave');
+		log_webhook_message(data.message, 'leave');
 	});
 
-	socket.on('chat', function  (data) {
-		log_chat_message(data.message, 'normal');
+	socket.on('webhook', function  (data) {
+		log_webhook_message(data.message, 'normal');
 	});
 
 	socket.on('error', function  (data) {
-		log_chat_message(data.message, 'error');
+		log_webhook_message(data.message, 'error');
 	});
 
-	jQuery('#chat_box').keypress(function (event) {
+	jQuery('#webhook_box').keypress(function (event) {
 		if (event.which == 13) {
-			socket.emit('chat', {message: jQuery('#chat_box').val()});
-			jQuery('#chat_box').val('');
+			socket.emit('webhook', {message: jQuery('#webhook_box').val()});
+			jQuery('#webhook_box').val('');
 		}
 	});
 });
     
-function setGetParameter(paramValue) {
+function setGetParameter() {
     var hookId = "hookId"
     var url = window.location.href;
     if (!(url.indexOf(hookId + "=") >= 0)) {
@@ -58,39 +59,17 @@ function setGetParameter(paramValue) {
     }
     
 }
-
-
 </script>
-<style type="text/css" media="screen">
-	div#chatroom {
-		display: block;
-		height: 300px;
-		border: 1px solid #999;
-		overflow: auto;
-		width: 100%;
-		margin-bottom: 10px;
-		position: relative;
-	}
 
-	ul#chat_log {
-		list-style: none;
-		position: absolute;
-		bottom: 0px;
-	}
-
-	input#chat_box {
-		width: 99%;
-	}
-</style>
 </head>
 <body>
-
-	<div id="chatroom">
-		<ul id="chat_log">
-		</ul>
+    <div id="webhook_list">
+		
 	</div>
-
-	<input type="text" name="chat_box" value="" id="chat_box" placeholder="type to chat..." />
+    <div id="webhook_content">
+        <pre id="webhook_log">
+		</pre>
+    </div>
 
 </body>
 </html>
