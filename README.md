@@ -22,5 +22,12 @@ This Node.js project allows you to view web to a server in your browser.
 
 	
 
+## Signaling Design
 
+![Design](assets/msg_design/1_MessageBus.png)
+
+
+## UI Design
+
+![Design](assets/msg_design/2_UI Design.png)
 
