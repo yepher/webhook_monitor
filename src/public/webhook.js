@@ -15,7 +15,12 @@ function onRequestClicked(str) {
         requestData += propName + ': '  + propValue + '\n';
     }
     
-    requestData += '\n' + JSON.stringify(JSON.parse(message.body), null, 2);
+    try {
+        requestData += '\n' + JSON.stringify(JSON.parse(message.body), null, 2);
+    } catch(e) {
+        requestData += '\nERROR: Failed to parse json because: ' + e + '\n\n';
+        requestData += '\n' + message.body;
+    }
 
     $('pre').html(requestData);
 }
