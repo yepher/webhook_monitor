@@ -7,7 +7,6 @@ var qs = require('querystring');
 var websocktPort = 3000;
 var serverPort = 8080;
 
-
 var app = connect().use(connect.static('public')).listen(websocktPort);
 
 var webhook_room = io.listen(app, { log: false });
@@ -20,7 +19,6 @@ webhook_room.sockets.on('connection', function (socket) {
         username: socket.id
     });
 });
-
 
 http.createServer(function (request, response) {
     
@@ -53,18 +51,17 @@ http.createServer(function (request, response) {
        
         request.on('end', function() {
             requestData.body = requestBody;
-            console.log(request.headers.host + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
+            console.log(new Date() + ' ' + request.headers.host + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
             webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
       });
     } else {
-        console.log(request.headers.host + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
+        console.log(new Date() + ' ' + request.headers.host + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
         webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
     }
-    
-    
     
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.end(formOutput);
   
 }).listen(serverPort);
 console.log('Server running at localhost:'+serverPort);
+

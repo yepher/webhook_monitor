@@ -38,6 +38,15 @@ jQuery(document).ready(function () {
         requests[itemCount] = message;
 		var li = jQuery('<li onclick="onRequestClicked(this.id)" id="' + itemCount + ' " />').text(message.type + ' ' + message.url + ' (' + message.body.length + ' bytes)');
 		
+        // Preparse payload so we can render it red in list if not valid JSON
+        try {
+            if (message.body && message.body.length > 0) {
+                JSON.stringify(JSON.parse(message.body), null, 2);
+            }
+        } catch(e) {
+            type = 'error';
+        }
+
 		if (type === 'system') {
 			li.css({'font-weight': 'bold'});
 		} else if (type === 'leave' || type === 'error') {
@@ -60,7 +69,7 @@ jQuery(document).ready(function () {
     
 });
 
-// Sets a random hookId if was was not provided by user
+// Sets a random hookId if one was not provided by user
 function setGetParameter() {
     var hookId = "hookId"
     var url = window.location.href;
@@ -76,7 +85,7 @@ function setGetParameter() {
     
 }
 
-// Convert Query Parameter to a JSON object
+// Convert Query Parameters to a JSON object
 function getUrlVars() {
     var vars = [], hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
