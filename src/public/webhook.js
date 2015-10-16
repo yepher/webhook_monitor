@@ -1,8 +1,23 @@
 var requests = { };
 
+// Handler for when user clicks on a request item
 function onRequestClicked(str) {
     var message = requests[parseInt(str)];
-    $('pre').html(JSON.stringify(JSON.parse(message.body), null, 2));
+    
+    var requestData = message.date + '\n' 
+        + 'From: ' + message.remoteAddress + '\n'
+        + '------------------------------' + '\n'
+        + message.type + ' ' + message.url  + '\n';
+    
+    var propValue;
+    for(var propName in message.headers) {
+        propValue = message.headers[propName];
+        requestData += propName + ': '  + propValue + '\n';
+    }
+    
+    requestData += '\n' + JSON.stringify(JSON.parse(message.body), null, 2);
+
+    $('pre').html(requestData);
 }
 
 jQuery(document).ready(function () {
@@ -40,6 +55,7 @@ jQuery(document).ready(function () {
     
 });
 
+// Sets a random hookId if was was not provided by user
 function setGetParameter() {
     var hookId = "hookId"
     var url = window.location.href;

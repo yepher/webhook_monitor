@@ -20,7 +20,7 @@ li:hover {
     bottom: 0;
     font-family: verdana;
     font-size: 0.8em;
-    width: 100%;
+    width: 95%;
     padding-right: 15px;
     text-align: right;
     height: 20px;
@@ -28,7 +28,7 @@ li:hover {
 }
 
 .textareawrapper {
-    width: 100%;
+    width: 95%;
     height: 92%;
     background-color: #ffffff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -39,7 +39,7 @@ li:hover {
     font-family: consolas,"courier new",monospace;
     font-size: 15px;
     height: 100%;
-    width: 100%;
+    width: 95%;
     padding: 8px;
     resize: none;
     border: none;
