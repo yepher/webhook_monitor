@@ -29,7 +29,7 @@ http.createServer(function (request, response) {
     var formOutput = '<html><body>'
         + '<h1>WebHook Landing Page</h1>'
         + 'View your data <a href="' + host + '?hookId=' + request.url.substring(1) + '">here</a><br>'
-        + 'Listeners: ' + webhook_room.sockets.clients(request.url).length;
+        + 'Listeners: ' + webhook_room.sockets.clients(request.url).length
         + '</body></html>';
     
     
