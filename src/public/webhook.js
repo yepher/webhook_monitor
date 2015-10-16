@@ -6,10 +6,12 @@ function onRequestClicked(str) {
 }
 
 jQuery(document).ready(function () {
-    
     var itemCount = 0;
     
     setGetParameter();
+
+    var hookId = '/' + getUrlVars()["hookId"];
+    jQuery('#webhood_location').text('WebHook URL: ' + window.location.protocol + '//' + location.hostname + ":8080" + hookId);
     
 	var log_webhook_message = function  (message, type) {
         itemCount++;
@@ -25,19 +27,15 @@ jQuery(document).ready(function () {
 		jQuery('#requestItems').append(li);
 	};
 
-	var socket = io.connect(':3000');
+	var socket = io.connect(':3000"');
 
     socket.on('requestData', function  (data) {
-        
-        console.log("RX: " + data);
 		log_webhook_message(data.message, 'normal');
 	});
     
-	jQuery('#webhook_box').keypress(function (event) {
-		if (event.which == 13) {
-			socket.emit('webhook', {message: jQuery('#webhook_box').val()});
-			jQuery('#webhook_box').val('');
-		}
+    socket.on('connected', function  (data) {
+        var hookId = '/' + getUrlVars()["hookId"];
+        socket.emit('join', {message: hookId });
 	});
     
 });
@@ -55,6 +53,18 @@ function setGetParameter() {
         window.location.href = url;
     }
     
+}
+
+// Convert Query Parameter to a JSON object
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
 }
 
 

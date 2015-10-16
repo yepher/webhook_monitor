@@ -20,13 +20,19 @@ webhook_room.sockets.on('connection', function (socket) {
     });
 });
 
-var formOutput = '<html><body>'
-    + '<h1>WebHook Landing Page</h1>'
-    + 'View your data <a href=":8080">here</a>'
-    + '</body></html>';
-
 
 http.createServer(function (request, response) {
+    
+    var host = request.headers.host + '/';
+    host = host.replace("8080", "3000");
+    
+    var formOutput = '<html><body>'
+        + '<h1>WebHook Landing Page</h1>'
+        + 'View your data <a href="' + host + '?hookId=' + request.url.substring(1) + '">here</a><br>'
+        + 'Listeners: ' + webhook_room.sockets.clients(request.url).length;
+        + '</body></html>';
+    
+    
     var requestData = {  };
     requestData.body = '';
     
@@ -46,10 +52,10 @@ http.createServer(function (request, response) {
        
         request.on('end', function() {
             requestData.body = requestBody;
-            webhook_room.sockets.emit('requestData', {message: requestData});  
+            webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
       });
     } else {
-        webhook_room.sockets.emit('requestData', {message: requestData});  
+        webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
     }
     
     response.writeHead(200, {'Content-Type': 'text/html'});
