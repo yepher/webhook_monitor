@@ -103,25 +103,8 @@ function getUrlVars() {
     See: https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HAR/Overview.html
 **/
 function saveHTTPArchive() {
-    console.log('TODO: saveHTTPArchive()');
-    
-    /**
-    "entries": [
-        {
-            "pageref": "page_0",
-            "startedDateTime": "2009-04-16T12:07:23.596Z",
-            "time": 50,
-            "request": {...},
-            "response": {...},
-            "cache": {...},
-            "timings": {},
-            "serverIPAddress": "10.0.0.1",
-            "connection": "52492",
-            "comment": ""
-        }
-    ]
-    
-    **/
+    //console.log('TODO: saveHTTPArchive()');
+    // Very basic support for saving web hook requests to HTTP Archive (.har) format
     
     var data = {
             log : { 

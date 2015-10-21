@@ -15,6 +15,12 @@ li:hover {
     line-height: 2;
 }
 
+.archiver {
+    width: 25px;
+    height: 25px;
+    float: left;
+}
+
 .footerText {
     position: absolute;
     bottom: 0;
@@ -77,4 +83,6 @@ li:hover {
     background-color: #ffffff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+
+
 
