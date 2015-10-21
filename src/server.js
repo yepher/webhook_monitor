@@ -35,6 +35,8 @@ http.createServer(function (request, response) {
     var requestData = {  };
     requestData.body = '';
     
+    console.log(request);
+    
     // Build up the object that will be sent to clients via websocket
     requestData.date = new Date();
     requestData.type = request.method;

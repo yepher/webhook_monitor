@@ -97,5 +97,129 @@ function getUrlVars() {
     return vars;
 }
 
+/** 
+    This file save the Web hook data as HAR
+    
+    See: https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HAR/Overview.html
+**/
+function saveHTTPArchive() {
+    console.log('TODO: saveHTTPArchive()');
+    
+    /**
+    "entries": [
+        {
+            "pageref": "page_0",
+            "startedDateTime": "2009-04-16T12:07:23.596Z",
+            "time": 50,
+            "request": {...},
+            "response": {...},
+            "cache": {...},
+            "timings": {},
+            "serverIPAddress": "10.0.0.1",
+            "connection": "52492",
+            "comment": ""
+        }
+    ]
+    
+    **/
+    
+    var data = {
+            log : { 
+                version: "1.2",
+                creator : {
+                    name: "WebHook Monitor",
+                    version: "0.0.1",
+                    coment: "https://github.com/yepher/webhook_monitor"
+                },
+                entries: [ ]
+            }
+    };
+    
+    var i = 0;
+    var entries = [];
+    for (idx in requests) {
+        var request = requests[idx];
+        
+        console.log(JSON.stringify(request));
+
+        var ref = 'page_' + i++;
+        var item = {
+            "pageref": ref,
+            "startedDateTime": request.date,
+            "time": 0,
+            "request": {
+                method:request.type,
+                url: 'http://' + request.headers['host'] + request.url,
+                httpVersion:"unknown",
+                headers:[ ],
+                queryString: [],
+                cookies: [],
+                headersSize: -1,
+                bodySize: request.body.length
+            },
+            response: {
+              status: 200,
+              statusText: "OK",
+              httpVersion: "HTTP/1.1",
+              headers: [
+                {
+                  name: "Date",
+                  value: request.date
+                },
+                {
+                  name: "Connection",
+                  value: "keep-alive"
+                },
+                {
+                  name: "Transfer-Encoding",
+                  value: "chunked"
+                },
+                {
+                  name: "Content-Type",
+                  value: "text/html"
+                }
+              ],
+              cookies: [],
+              content: {
+                size: 134,
+                mimeType: "text/html",
+                compression: -11,
+                text: "<html><body><h1>WebHook Landing Page</h1>View your data <a href=\"localhost:3000/?hookId=389956\">here</a><br>Listeners: 1</body></html>"
+              },
+              redirectURL: "",
+              headersSize: 133,
+              bodySize: 145,
+              _transferSize: 278
+            },
+            cache: {},
+            timings: {},
+            serverIPAddress: "",
+            "connection": 'x' + JSON.stringify(request.remoteAddress),
+            "comment": ""
+        };
+        
+        var headers = [ ];
+        // Put headers in request
+        for (key in request.headers) {
+            var headerItem = {
+                name:key,
+                value:request.headers[key]
+            }
+            
+           headers.push(headerItem);
+        }
+        item.request.headers = headers;
+        
+        entries.push(item);
+    }
+
+    data.log.entries = entries;
+    
+    //console.log(data);
+    var json = JSON.stringify(data, null, 2);
+    download(json, "webhooks.har", "application/json");
+
+}
+
 
 
