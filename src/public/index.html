@@ -7,6 +7,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="jquery-1.7.2.min.js"></script>
 <script src="webhook.js"></script>
+<script src="download2.js"></script>
 <script type="text/javascript" charset="utf-8">
 
 </script>
@@ -18,7 +19,7 @@
     <div class="container">
         <div class="requestlist">
             <div style="overflow:auto;">
-                <div class="headerText">Requests</div>
+                <div class="headerText">Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
             </div>
             <div class="textareawrapper">
                 <ul id="requestItems">
