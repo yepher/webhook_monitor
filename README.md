@@ -1,6 +1,6 @@
 # WebHook Snooper
 
-This Node.js project allows you to view web to a server in your browser.
+This Node.js project allows you to view webhook calls to a server in your browser.
 
 ![ScreenShot](assets/ScreenShot.png)
 
