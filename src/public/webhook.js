@@ -98,7 +98,7 @@ function getUrlVars() {
 }
 
 /** 
-    This file save the Web hook data as HAR
+    Saves the Web hook data as an HTTP Archive (.har)
     
     See: https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HAR/Overview.html
 **/
@@ -123,7 +123,7 @@ function saveHTTPArchive() {
     for (idx in requests) {
         var request = requests[idx];
         
-        console.log(JSON.stringify(request));
+        //console.log(JSON.stringify(request));
 
         var ref = 'page_' + i++;
         var item = {
