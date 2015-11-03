@@ -16,7 +16,7 @@ This Node.js project allows you to view webhook calls to a server in your browse
 * Fetch Source
 	* `git clone https://github.com/yepher/webhook_monitor.git`
 * Run Server
-	* `cd webhook_monitor`
+	* `cd webhook_monitor/src`
 	* `npm install`
 	* `node server.js`
 
