@@ -1,43 +1,49 @@
-li:hover { 
-    background-color: #f1f1f1;
-    cursor: pointer  ;
+h1, h2 {
+	margin-left: 10px;
 }
 
-.requestlist li {
-   border-bottom: 1px solid #f1f1f1;  
+h2 {
+	font-size: .8em;
+	font-weight: normal;
+}
+.container {
+    background-color: #f1f1f1;
+    width: 95%;
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    height: auto;
+    min-height: 250px;
+    min-width: 550px;
+	padding: 20px;
+	overflow: auto;
 }
 
 .headerText {
-    width: auto;
-    float: left;
     font-family: verdana;
     font-size: 1em;
     line-height: 2;
+}
+
+.requestlist {
+    height: 60%;
+    width: 95%;
+	margin-bottom: 30px;
+}
+
+.textareawrapper {
+    overflow: auto;
+	width: 95%;
+    height: 93%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .archiver {
     width: 25px;
     height: 25px;
     float: left;
-}
-
-.footerText {
-    position: absolute;
-    bottom: 0;
-    font-family: verdana;
-    font-size: 0.8em;
-    width: 95%;
-    padding-right: 15px;
-    text-align: right;
-    height: 20px;
-    overflow: hidden;
-}
-
-.textareawrapper {
-    width: 95%;
-    height: 92%;
-    background-color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	margin-right: 10px;
 }
 
 #requestItems {
@@ -51,33 +57,23 @@ li:hover {
     border: none;
 }
 
-.container {
+li:hover { 
     background-color: #f1f1f1;
-    width: 100%;
-    overflow: auto;
-    position: absolute;
-    top: 100px;
-    bottom: 0;
-    height: auto;
-    min-height: 250px;
-    min-width: 550px;
+    cursor: pointer  ;
 }
 
-.requestlist {
-    float: left;
-    height: 100%;
-    width: 35%;
+.requestlist li {
+   border-bottom: 1px solid #f1f1f1;  
 }
 
 .requestcontent {
-    float: left;
     height: 100%;
-    width: 64%;
+    width: 95%;
 }
 
 #webhook_log {
-    width: 100%;
-    height: 92%;
+    width: 98%;
+    height: 100%;
     padding: 8px;
     -webkit-overflow-scrolling: touch;
     background-color: #ffffff;
@@ -85,4 +81,13 @@ li:hover {
 }
 
 
-
+.footerText {
+    bottom: 0;
+    font-family: verdana;
+    font-size: 0.8em;
+    width: 100%;
+    padding-right: 15px;
+    text-align: right;
+    height: 20px;
+    overflow: auto;
+}
