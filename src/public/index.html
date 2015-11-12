@@ -1,9 +1,10 @@
 <!-- 
     Reference: http://www.w3schools.com/html/tryit.asp?filename=tryhtml_layout_divs
 -->
-<html>
+<!DOCTYPE html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="normalize.css">
 <script src="/socket.io/socket.io.js"></script>
 <script src="jquery-1.7.2.min.js"></script>
 <script src="webhook.js"></script>
@@ -15,10 +16,10 @@
 </head>
 <body>
     <h1>WebHook Viewer</h1>
-    <p id="webhood_location"></p>
+    <h2><p id="webhood_location"></p></h2>
     <div class="container">
         <div class="requestlist">
-            <div style="overflow:auto;">
+            <div >
                 <div class="headerText">Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
             </div>
             <div class="textareawrapper">
@@ -26,15 +27,18 @@
 		        </ul>
             </div>
         </div>
-        <div class="requestcontent">
-            <div style="overflow:auto;">
-                <div class="headerText">Request Content:</div>
+		
+		<div class="requestcontent">
+			<div>
+				<div class="headerText">Request Content:</div>
+			</div>
+			<div class="textareawrapper">
+				<pre id="webhook_log"></pre>
             </div>
-            <pre id="webhook_log"></pre>
         </div>
         
         <div class="footerText"> WebHook Viewer <a href="https://github.com/yepher/webhook_monitor"github.com/yepher/webhook_monitor</a></div>
     </div>
-
+	
 </body>
 </html>
