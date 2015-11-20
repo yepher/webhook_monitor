@@ -22,7 +22,9 @@ function onRequestClicked(str) {
         requestData += '\n' + message.body;
     }
 
-    $('pre').html(requestData);
+    //$('editor').html(requestData);
+    var editor = ace.edit("editor");
+    editor.setValue(requestData);
 }
 
 jQuery(document).ready(function () {
