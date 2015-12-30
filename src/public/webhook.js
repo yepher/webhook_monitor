@@ -4,7 +4,7 @@ var requests = { };
 function onRequestClicked(str) {
     var message = requests[parseInt(str)];
     
-    var requestData = message.date + '\n' 
+    var httpHeader = message.date + '\n' 
         + 'From: ' + message.remoteAddress + '\n'
         + '------------------------------' + '\n'
         + message.type + ' ' + message.url  + '\n';
@@ -12,19 +12,24 @@ function onRequestClicked(str) {
     var propValue;
     for(var propName in message.headers) {
         propValue = message.headers[propName];
-        requestData += propName + ': '  + propValue + '\n';
+        httpHeader += propName + ': '  + propValue + '\n';
     }
     
+    var requestData = "";
     try {
-        requestData += '\n' + JSON.stringify(JSON.parse(message.body), null, 2);
+        requestData += JSON.stringify(JSON.parse(message.body), null, 2);
     } catch(e) {
         requestData += '\nERROR: Failed to parse json because: ' + e + '\n\n';
         requestData += '\n' + message.body;
     }
 
-    //$('editor').html(requestData);
+    pre = document.getElementById('httpHeaders');
+    pre.textContent = httpHeader;
+    //$('httpHeaders').html(httpHeader);
+    
     var editor = ace.edit("editor");
     editor.setValue(requestData);
+    editor.scrollToLine(0);
 }
 
 jQuery(document).ready(function () {
