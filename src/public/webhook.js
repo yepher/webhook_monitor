@@ -38,6 +38,7 @@ jQuery(document).ready(function () {
     setGetParameter();
 
     var hookId = '/' + getUrlVars()["hookId"];
+    hookId = hookId.split('#')[0];
     jQuery('#webhood_location').text('WebHook URL: ' + window.location.protocol + '//' + location.hostname + ":8080" + hookId);
     
 	var log_webhook_message = function  (message, type) {
@@ -71,6 +72,7 @@ jQuery(document).ready(function () {
     
     socket.on('connected', function  (data) {
         var hookId = '/' + getUrlVars()["hookId"];
+        hookId = hookId.split('#')[0];
         socket.emit('join', {message: hookId });
 	});
     
