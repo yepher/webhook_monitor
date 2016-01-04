@@ -1,8 +1,16 @@
 var requests = { };
 
 // Handler for when user clicks on a request item
-function onRequestClicked(str) {
-    var message = requests[parseInt(str)];
+function onRequestClicked(row) {
+    
+    // Mark row as selected
+    $(row).addClass('selected').siblings().removeClass('selected');    
+    var value=$(this).find('td:first').html();
+    
+    // Get selected Row ID
+    var rowId = row.id;
+    var message = requests[parseInt(rowId)];
+    
     
     var httpHeader = message.date + '\n' 
         + 'From: ' + message.remoteAddress + '\n'
@@ -30,6 +38,7 @@ function onRequestClicked(str) {
     
     var editor = ace.edit("editor");
     editor.setValue(requestData);
+    editor.session.selection.clearSelection();
     editor.scrollToLine(0);
 }
 
@@ -46,7 +55,7 @@ jQuery(document).ready(function () {
         itemCount++;
         requests[itemCount] = message;
         
-        var row = $('<tr onclick="onRequestClicked(this.id)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
+        var row = $('<tr onclick="onRequestClicked(this)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
 
         
         $('<td />', {

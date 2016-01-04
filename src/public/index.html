@@ -13,24 +13,8 @@
     <script src="webhook.js"></script>
     <script src="download2.js"></script>
     <script type="text/javascript" charset="utf-8">
-
-</script>
-<style>
-    #mode {
-        position: relative;
-        padding-bottom: 10px;
-    }
-    #requests {
-        position: relative;
-        height:400px;
-        width: 95%
-    }
-    #editor {
-        position: relative;
-        height:400px;
-        width: 95%
-    }
-</style>
+       
+    </script>
 </head>
 <body ng-controller="webhookController" style="width:90%; padding-left:5%">
     <div ng-app id="ng-app">
@@ -187,12 +171,12 @@
     editor.findNext();
     editor.findPrevious();
     
-    
     $('#mode').on('change', function (ev) {
         var mode = $('option:selected').attr('value');
         //console.log(mode)
         editor.getSession().setMode(mode);
     });
+    
 </script>
 </body>
 </html>

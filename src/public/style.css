@@ -26,16 +26,8 @@ h2 {
     line-height: 2;
 }
 
-.requestlist {
-/*
-    height: 60%;
-    width: 95%;
-	margin-bottom: 30px;
-*/
-}
-
 th {
-    background-color: gray;
+    background-color: lightblue;
     height: 10px;
 }
 
@@ -47,6 +39,10 @@ tr {
 .requestrow:hover {
     background-color: azure;
     cursor: pointer  ;
+}
+
+.selected {
+    background-color: #f1f1f1;
 }
 
 .textareawrapper {
@@ -108,4 +104,19 @@ li:hover {
     text-align: right;
     height: 20px;
     overflow: auto;
+}
+
+#mode {
+    position: relative;
+    padding-bottom: 10px;
+}
+#requests {
+    position: relative;
+    height:400px;
+    width: 95%
+}
+#editor {
+    position: relative;
+    height:400px;
+    width: 95%
 }
