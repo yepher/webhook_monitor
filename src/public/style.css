@@ -6,6 +6,7 @@ h2 {
 	font-size: .8em;
 	font-weight: normal;
 }
+
 .container {
     background-color: #f1f1f1;
     width: 95%;
@@ -26,9 +27,26 @@ h2 {
 }
 
 .requestlist {
+/*
     height: 60%;
     width: 95%;
 	margin-bottom: 30px;
+*/
+}
+
+th {
+    background-color: gray;
+    height: 10px;
+}
+
+tr {
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+.requestrow:hover {
+    background-color: azure;
+    cursor: pointer  ;
 }
 
 .textareawrapper {

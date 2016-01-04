@@ -41,11 +41,20 @@
                 <div >
                     <div class="headerText">Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
                 </div>
-                <div class="textareawrapper" id="requests">
-                    <ul id="requestItems">
-                    </ul>
+                <div style="height:200px;overflow:auto;width:100%;" class="textareawrapper" id="requests">
+                    <table id="requestItems">
+                        <tr>
+                            <th>Time</th>
+                            <th>Method</th>
+                            <th>Hook Id</th>
+                            <th>Source Address</th>
+                            <th>Size</th>
+                            <th>Listeners</th>
+                      </tr>
+                        
+                    </table>
                 </div>
-            </div>
+            </div><br/><br/>
 
             <div class="requestcontent">
                 <a href="#" ng-model="collapsed" ng-click="headersCollapsed=!headersCollapsed">Request Headers <strong>(show/hide)</strong></a>
@@ -155,7 +164,7 @@
                     <option value="ace/mode/xquery">xquery</option>
                     <option value="ace/mode/yaml">yaml</option>
                 </select><br/><br/>
-                <div id="editor"></div>
+                <div id="editor" ></div>
             </div>
 
             <div class="footerText"> WebHook Viewer <a href="https://github.com/yepher/webhook_monitor" target="_blank">github.com/yepher/webhook_monitor</a></div>

@@ -45,8 +45,35 @@ jQuery(document).ready(function () {
 	var log_webhook_message = function  (message, type) {
         itemCount++;
         requests[itemCount] = message;
-		var li = jQuery('<li onclick="onRequestClicked(this.id)" id="' + itemCount + ' " />').text(message.type + ' ' + message.url + ' From: [' + message.remoteAddress + '] (' + message.body.length + ' bytes) listeners: (' + message.listeners + ')');
-		
+        
+        var row = $('<tr onclick="onRequestClicked(this.id)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
+
+        
+        $('<td />', {
+            'text': message.date
+        }).appendTo(row);
+        
+        $('<td />', {
+            'text': message.type
+        }).appendTo(row);
+        
+        $('<td />', {
+            'text': message.url
+        }).appendTo(row);
+        
+        $('<td />', {
+            'text': message.remoteAddress
+        }).appendTo(row);
+        
+        $('<td />', {
+            'text': message.body.length
+        }).appendTo(row);
+        
+        $('<td />', {
+            'text': message.listeners
+        }).appendTo(row);
+        
+	
         // Preparse payload so we can render it red in list if not valid JSON
         try {
             if (message.body && message.body.length > 0) {
@@ -57,13 +84,11 @@ jQuery(document).ready(function () {
         }
 
 		if (type === 'system') {
-			li.css({'font-weight': 'bold'});
+			row.css({'font-weight': 'bold'});
 		} else if (type === 'leave' || type === 'error') {
-			li.css({'font-weight': 'bold', 'color': '#F00'});
+			row.css({'font-weight': 'bold', 'color': '#F00'});
 		}
-				
-		jQuery('#requestItems').append(li);
-	};
+    };
 
 	var socket = io.connect(':3000"');
 
