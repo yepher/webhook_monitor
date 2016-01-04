@@ -4,7 +4,8 @@
 cd "$(dirname $0)"
 
 # Copy over new site
-scp -r ../../src/* yepher@yepher.com:~/webhook
+#scp -r ../../src/* yepher@yepher.com:~/webhook
+scp -r ../../src/* $WEB_HOOK_DEMO
 
 
 

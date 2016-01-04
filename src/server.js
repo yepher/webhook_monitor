@@ -40,9 +40,10 @@ http.createServer(function (request, response) {
     // Build up the object that will be sent to clients via websocket
     requestData.date = new Date();
     requestData.type = request.method;
-    requestData.url = request.url
+    requestData.url = request.url;
     requestData.headers = request.headers;
     requestData.remoteAddress = request.connection.remoteAddress;
+    requestData.listeners = webhook_room.sockets.clients(request.url).length;
     
     var requestBody = '';
     if(request.method === "POST" || request.method === "PUT") {

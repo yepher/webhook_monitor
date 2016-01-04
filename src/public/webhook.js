@@ -6,6 +6,7 @@ function onRequestClicked(str) {
     
     var httpHeader = message.date + '\n' 
         + 'From: ' + message.remoteAddress + '\n'
+        + 'Listeners: ' + message.listeners + '\n'
         + '------------------------------' + '\n'
         + message.type + ' ' + message.url  + '\n';
     
@@ -44,7 +45,7 @@ jQuery(document).ready(function () {
 	var log_webhook_message = function  (message, type) {
         itemCount++;
         requests[itemCount] = message;
-		var li = jQuery('<li onclick="onRequestClicked(this.id)" id="' + itemCount + ' " />').text(message.type + ' ' + message.url + ' (' + message.body.length + ' bytes)');
+		var li = jQuery('<li onclick="onRequestClicked(this.id)" id="' + itemCount + ' " />').text(message.type + ' ' + message.url + ' From: [' + message.remoteAddress + '] (' + message.body.length + ' bytes) listeners: (' + message.listeners + ')');
 		
         // Preparse payload so we can render it red in list if not valid JSON
         try {
