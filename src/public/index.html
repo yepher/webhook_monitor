@@ -25,7 +25,7 @@
                 <div >
                     <div class="headerText">Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
                 </div>
-                <div style="height:200px;overflow:auto;width:100%;" class="textareawrapper" id="requests">
+                <div style="height:200px;overflow:auto;width:95%;" class="textareawrapper" id="requests">
                     <table id="requestItems">
                         <tr>
                             <th>Time</th>
@@ -148,35 +148,35 @@
                     <option value="ace/mode/xquery">xquery</option>
                     <option value="ace/mode/yaml">yaml</option>
                 </select><br/><br/>
-                <div id="editor" ></div>
+                <div id="editor"></div>
             </div>
 
             <div class="footerText"> WebHook Viewer <a href="https://github.com/yepher/webhook_monitor" target="_blank">github.com/yepher/webhook_monitor</a></div>
         </div>
     <div ng-app id="ng-app">
     <script src="//ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/github");
-    editor.getSession().setMode("ace/mode/json");
-    editor.setReadOnly(true);
-    
-    editor.find('needle',{
-        backwards: false,
-        wrap: false,
-        caseSensitive: false,
-        wholeWord: false,
-        regExp: false
-    });
-    editor.findNext();
-    editor.findPrevious();
-    
-    $('#mode').on('change', function (ev) {
-        var mode = $('option:selected').attr('value');
-        //console.log(mode)
-        editor.getSession().setMode(mode);
-    });
-    
-</script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/github");
+        editor.getSession().setMode("ace/mode/json");
+        editor.setReadOnly(true);
+
+        editor.find('needle',{
+            backwards: false,
+            wrap: false,
+            caseSensitive: false,
+            wholeWord: false,
+            regExp: false
+        });
+        editor.findNext();
+        editor.findPrevious();
+
+        $('#mode').on('change', function (ev) {
+            var mode = $('option:selected').attr('value');
+            //console.log(mode)
+            editor.getSession().setMode(mode);
+        });
+
+    </script>
 </body>
 </html>
