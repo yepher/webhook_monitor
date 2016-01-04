@@ -54,11 +54,11 @@ http.createServer(function (request, response) {
        
         request.on('end', function() {
             requestData.body = requestBody;
-            console.log(new Date() + ' ' + request.headers.host + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
+            console.log(new Date() + ' ' + request.connection.remoteAddress + ' ' + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
             webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
       });
     } else {
-        console.log(new Date() + ' ' + request.headers.host + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
+        console.log(new Date() + ' ' + request.connection.remoteAddress + ' ' + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
         webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
     }
     
