@@ -21,7 +21,7 @@
         <div class="panel-heading" style="width:100%;textalign:center">WebHook Viewer</div>
         <h2><p id="webhood_location"></p></h2>
         <div class="container">
-            Search: <input id=target>
+            Search: <input id="searchTarget">
             <div class="requestlist">
                 
                 <div >
@@ -180,7 +180,7 @@
         var thread = null;
     
         /**
-        Search for json that matches search criterea
+        Search for json that matches the search criterea
         **/
         function findData(searchData) {
             console.log("findData: " + searchData)
@@ -190,7 +190,7 @@
             for (idx in requests) {
                 var request = requests[idx];
                 
-                if (JSON.stringify(request).indexOf(searchData) > -1){  
+                if (searchData != "" && JSON.stringify(request).indexOf(searchData) > -1){  
                     // Set found flag
                     rows[idx].style.backgroundColor = '#FFFFE0';
                 } else {
@@ -203,7 +203,7 @@
          Search entry Clears the timeout on each press, so if 1/2 second 
          hasn't passed the func wont be executed, then set a timer for 500ms again.
         **/
-        $('#target').keyup(function() {
+        $('#searchTarget').keyup(function() {
             clearTimeout(thread);
             var $this = $(this); thread = setTimeout(function(){
                 findData($this.val())

@@ -89,6 +89,7 @@ jQuery(document).ready(function () {
                 JSON.stringify(JSON.parse(message.body), null, 2);
             }
         } catch(e) {
+            console.log(e);
             type = 'error';
         }
 
@@ -97,6 +98,8 @@ jQuery(document).ready(function () {
 		} else if (type === 'leave' || type === 'error') {
 			row.css({'font-weight': 'bold', 'color': '#F00'});
 		}
+        
+        $('#searchTarget').keyup();
     };
 
 	var socket = io.connect(':3000"');
