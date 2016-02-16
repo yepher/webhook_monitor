@@ -110,7 +110,6 @@ jQuery(document).ready(function () {
         hookId = hookId.split('#')[0];
         socket.emit('join', {message: hookId });
 	});
-    
 });
 
 // Sets a random hookId if one was not provided by user

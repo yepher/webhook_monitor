@@ -18,10 +18,12 @@
 </head>
 <body ng-controller="webhookController" style="width:90%; padding-left:5%">
     <div ng-app id="ng-app">
-        <div class="panel-heading" style="textalign:centre">WebHook Viewer</div>
+        <div class="panel-heading" style="width:100%;textalign:center">WebHook Viewer</div>
         <h2><p id="webhood_location"></p></h2>
         <div class="container">
+            Search: <input id=target>
             <div class="requestlist">
+                
                 <div >
                     <div class="headerText">Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
                 </div>
@@ -40,7 +42,7 @@
                 </div>
             </div><br/><br/>
 
-            <div class="requestcontent">
+            <div class="requestcontent" >
                 <a href="#" ng-model="collapsed" ng-click="headersCollapsed=!headersCollapsed">Request Headers <strong>(show/hide)</strong></a>
                     <div ng-show="!headersCollapsed"><pre class="httpHeaders" id="httpHeaders"></div>
                     <hr />
@@ -150,8 +152,7 @@
                 </select><br/><br/>
                 <div id="editor" class="requestPayload"></div>
             </div>
-            <br/><br>
-            <div class="footerText"> WebHook Viewer <a href="https://github.com/yepher/webhook_monitor" target="_blank">github.com/yepher/webhook_monitor</a>             </div>
+            
         </div>
     
     <script src="//ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -173,8 +174,40 @@
 
         $('#mode').on('change', function (ev) {
             var mode = $('option:selected').attr('value');
-            //console.log(mode)
             editor.getSession().setMode(mode);
+        });
+        
+        var thread = null;
+    
+        /**
+        Search for json that matches search criterea
+        **/
+        function findData(searchData) {
+            console.log("findData: " + searchData)
+            var table = document.getElementById("requestItems");   
+            var rows = table.getElementsByTagName("tr");   
+            
+            for (idx in requests) {
+                var request = requests[idx];
+                
+                if (JSON.stringify(request).indexOf(searchData) > -1){  
+                    // Set found flag
+                    rows[idx].style.backgroundColor = '#FFFFE0';
+                } else {
+                    rows[idx].style.backgroundColor = '#FFFFFF';
+                }
+            }
+        }
+
+        /**
+         Search entry Clears the timeout on each press, so if 1/2 second 
+         hasn't passed the func wont be executed, then set a timer for 500ms again.
+        **/
+        $('#target').keyup(function() {
+            clearTimeout(thread);
+            var $this = $(this); thread = setTimeout(function(){
+                findData($this.val())
+            }, 1000);
         });
 
     </script>
