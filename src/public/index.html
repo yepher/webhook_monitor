@@ -18,14 +18,14 @@
 </head>
 <body ng-controller="webhookController" style="width:90%; padding-left:5%">
     <div ng-app id="ng-app">
-        <div class="panel-heading" style="width:100%;textalign:center">WebHook Viewer</div>
+        <div class="panel-heading" style="width:100%;textalign:center"><b>WebHook Viewer</b></div>
         <h2><p id="webhood_location"></p></h2>
         <div class="container">
             Search: <input id="searchTarget">
             <div class="requestlist">
                 
                 <div >
-                    <div class="headerText">Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
+                    <div title="Download events as HTTP archive" class="headerText"> Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
                 </div>
                 <div style="height:200px;overflow:auto;width:95%;" class="textareawrapper" id="requests">
                     <table id="requestItems">
