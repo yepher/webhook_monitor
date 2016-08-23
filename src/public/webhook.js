@@ -150,7 +150,6 @@ function getUrlVars() {
     See: https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HAR/Overview.html
 **/
 function saveHTTPArchive() {
-    //console.log('TODO: saveHTTPArchive()');
     // Very basic support for saving web hook requests to HTTP Archive (.har) format
     
     var data = {
@@ -214,7 +213,7 @@ function saveHTTPArchive() {
                 size: 134,
                 mimeType: "text/html",
                 compression: -11,
-                text: "<html><body><h1>WebHook Landing Page</h1>View your data <a href=\"localhost:3000/?hookId=389956\">here</a><br>Listeners: 1</body></html>"
+                text: request.responseData
               },
               redirectURL: "",
               headersSize: 133,
@@ -227,6 +226,14 @@ function saveHTTPArchive() {
             "connection": 'x' + JSON.stringify(request.remoteAddress),
             "comment": ""
         };
+        
+        if (request.body.length > 0) {
+            item.request.postData = {
+                mimeType: request.headers['content-type'],
+                text : request.body,
+                comment: ""
+            }
+        }
         
         var headers = [ ];
         // Put headers in request

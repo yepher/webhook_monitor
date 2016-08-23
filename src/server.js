@@ -47,6 +47,7 @@ http.createServer(function (request, response) {
     requestData.headers = request.headers;
     requestData.remoteAddress = request.connection.remoteAddress;
     requestData.listeners = webhook_room.sockets.clients(webhookId).length;
+    requestData.responseData = formOutput;
     
     var requestBody = '';
     if(request.method === "POST" || request.method === "PUT") {
