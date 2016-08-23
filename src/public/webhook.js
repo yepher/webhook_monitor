@@ -103,16 +103,29 @@ jQuery(document).ready(function () {
         $('#searchTarget').keyup();
     };
 
+    var status = document.getElementById('connectStatus')
+    status.className = "connecting";
+    
 	var socket = io.connect(':3000"');
-
+    
     socket.on('requestData', function  (data) {
 		log_webhook_message(data.message, 'normal');
 	});
     
     socket.on('connected', function  (data) {
+        console.log("web socekt connected")
         var hookId = '/' + getUrlVars()["hookId"];
         hookId = hookId.split('#')[0];
         socket.emit('join', {message: hookId });
+        
+        var status = document.getElementById('connectStatus')
+        status.className = "connected";
+	});
+    
+    socket.on('disconnect', function  (data) {
+		console.log("web socekt Disconnected")
+        var status = document.getElementById('connectStatus')
+        status.className = "disconnected";
 	});
 });
 

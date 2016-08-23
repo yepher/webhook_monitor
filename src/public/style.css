@@ -80,6 +80,33 @@ tr {
     border: none;
 }
 
+.statusField {
+    height: 20px;
+    padding-right: 90px;
+    white-space:nowrap;
+}
+
+.connecting {
+    width: 10px;
+    height: 10px;
+    background-color: orange;
+    display:inline-block;
+}
+
+.connected {
+    width: 10px;
+    height: 10px;
+    background-color: greenyellow;
+    display:inline-block;
+}
+
+.disconnected {
+    width: 10px;
+    height: 10px;
+    background-color: orangered;
+    display:inline-block;
+}
+
 li:hover { 
     background-color: #f1f1f1;
     cursor: pointer  ;
