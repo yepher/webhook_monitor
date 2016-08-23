@@ -39,12 +39,13 @@ tr {
 }
 
 .requestrow:hover {
-    background-color: azure;
+    background-color: #E8E8E8;
     cursor: pointer  ;
 }
 
 .selected {
-    background-color: #f1f1f1;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 .textareawrapper {
