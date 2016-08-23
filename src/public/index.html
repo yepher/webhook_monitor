@@ -194,10 +194,13 @@
                 var request = requests[idx];
                 
                 if (searchData != "" && JSON.stringify(request).indexOf(searchData) > -1){  
-                    // Set found flag
-                    rows[idx].style.backgroundColor = '#FFFFE0';
+                    // Row contains search string so add the found class if not already present
+                    if (!rows[idx].classList.contains('found')) {
+                        rows[idx].className += ' found'; // must have leading space
+                    }
                 } else {
-                    rows[idx].style.backgroundColor = '';
+                    // Row does not contain search string so remove the found class
+                    rows[idx].classList.remove('found');
                 }
             }
         }

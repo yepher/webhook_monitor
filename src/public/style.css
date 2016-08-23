@@ -46,6 +46,12 @@ tr {
 .selected {
     text-decoration: underline;
     font-weight: bold;
+    
+    outline: thin solid lightblue;
+}
+
+.found {
+    background-color: #FFFFE0;
 }
 
 .textareawrapper {
