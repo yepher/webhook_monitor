@@ -158,6 +158,7 @@
     <script src="//ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
         var editor = ace.edit("editor");
+        editor.$blockScrolling = Infinity
         editor.setTheme("ace/theme/github");
         editor.getSession().setMode("ace/mode/json");
         editor.setReadOnly(true);
@@ -183,7 +184,9 @@
         Search for json that matches the search criterea
         **/
         function findData(searchData) {
-            console.log("findData: " + searchData)
+            if (searchData) {
+                console.log("findData: " + searchData)
+            }
             var table = document.getElementById("requestItems");   
             var rows = table.getElementsByTagName("tr");   
             

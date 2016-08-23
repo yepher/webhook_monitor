@@ -25,10 +25,13 @@ http.createServer(function (request, response) {
     var host = request.headers.host + '/';
     host = host.replace("8080", "3000");
     
+    var webhookId = "/" +  request.url.split("/")[1];
+    console.log("WebhookID: " + webhookId);
+    
     var formOutput = '<html><body>'
         + '<h1>WebHook Landing Page</h1>'
-        + 'View your data <a href="' + host + '?hookId=' + request.url.substring(1) + '">here</a><br>'
-        + 'Listeners: ' + webhook_room.sockets.clients(request.url).length
+        + 'View your data <a href="' + host + '?hookId=' + webhookId + '">here</a><br>'
+        + 'Listeners: ' + webhook_room.sockets.clients(webhookId).length
         + '</body></html>';
     
     
@@ -43,7 +46,7 @@ http.createServer(function (request, response) {
     requestData.url = request.url;
     requestData.headers = request.headers;
     requestData.remoteAddress = request.connection.remoteAddress;
-    requestData.listeners = webhook_room.sockets.clients(request.url).length;
+    requestData.listeners = webhook_room.sockets.clients(webhookId).length;
     
     var requestBody = '';
     if(request.method === "POST" || request.method === "PUT") {
@@ -55,16 +58,16 @@ http.createServer(function (request, response) {
         request.on('end', function() {
             requestData.body = requestBody;
             console.log(new Date() + ' ' + request.connection.remoteAddress + ' ' + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
-            webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
+            webhook_room.sockets.to(webhookId).emit('requestData', {message: requestData});  
       });
     } else {
-        console.log(new Date() + ' ' + request.connection.remoteAddress + ' ' + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(request.url).length + ' listeners');
-        webhook_room.sockets.to(request.url).emit('requestData', {message: requestData});  
+        console.log(new Date() + ' ' + request.connection.remoteAddress + ' ' + request.url + ' is writing ' + requestData.body.length + ' bytes to ' + webhook_room.sockets.clients(webhookId).length + ' listeners');
+        webhook_room.sockets.to(webhookId).emit('requestData', {message: requestData});  
     }
     
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.end(formOutput);
   
 }).listen(serverPort);
-console.log('Server running at localhost:'+serverPort);
+console.log('Server running on port: '+serverPort);
 

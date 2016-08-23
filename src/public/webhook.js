@@ -57,9 +57,10 @@ jQuery(document).ready(function () {
         
         var row = $('<tr onclick="onRequestClicked(this)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
 
+        var date = new Date(message.date);
         
         $('<td />', {
-            'text': message.date
+            'text': date.toString()
         }).appendTo(row);
         
         $('<td />', {
