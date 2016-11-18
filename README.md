@@ -4,7 +4,7 @@ Webhook Monitor enables you to easily view HTTP requests in your own local brows
 
 If you are implementing an App that uses a RESTful API you can point your client at Webhook Monitor to see the headers and body of your requests.
 
-If you are developer a consumer of Webhook Events you can point your Webhook generator at Webhook Monitor to see what
+If you are developer a consumer of Webhook Events you can point your Webhook generator at Webhook Monitor to see what the details of those events.
 
 **Webhook Monitor:**
 * Does not store the data on the server
