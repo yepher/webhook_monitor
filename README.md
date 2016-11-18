@@ -1,8 +1,15 @@
-# WebHook Snooper
+# WebHook Monitor
 
-This Node.js project allows you to view webhook calls to a server in your browser.
+Webhook Monitor enables you to easily view HTTP requests in your own local browser. There is no need to open a port in order receive and view HTTP content from the. Multiple users can view the HTPP request concurrently and from any location.
 
-![ScreenShot](assets/ScreenShot.png)
+If you are implementing an App that uses a RESTful API you can point your client at Webhook Monitor to see the headers and body of your requests.
+
+If you are developer a consumer of Webhook Events you can point your Webhook generator at Webhook Monitor to see what
+
+**Webhook Monitor:**
+* Does not store the data on the server
+* Allows multiple users to view HTTP requests concurrently
+
 
 ## Similar Tools:
 
@@ -16,7 +23,7 @@ This Node.js project allows you to view webhook calls to a server in your browse
 * WebHook Server: http://[SERVER]:8080/YouName
 * Webhook Viewer: http://[SERVER]:3000/?hookId=YouName
 
-
+![ScreenShot](assets/ScreenShot.png)
 
 ## Getting started
 
