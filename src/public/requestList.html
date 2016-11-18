@@ -58,9 +58,9 @@
             }
             
             var table = document.getElementById("requestItems");
-            console.log("Table: " + table);
+            //console.log("Table: " + table);
             var rows = table.getElementsByTagName("tr");
-            console.log("rows: " + rows);
+            //console.log("rows: " + rows);
             
             for (idx in requests) {
                 var request = requests[idx];
@@ -72,7 +72,7 @@
                     }
                 } else {
                     // Row does not contain search string so remove the found class
-                    console.log("Row[" + idx + "]: " + rows[idx]);
+                    //console.log("Row[" + idx + "]: " + rows[idx]);
                     rows[idx].classList.remove('found');
                 }
             }
@@ -95,7 +95,7 @@
             requests[itemCount] = message;
 
             var row = $('<tr onclick="onRequestClicked(this)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
-            console.log("Add item: " + itemCount);
+            //console.log("Add item: " + itemCount);
             
             var date = new Date(message.date);
 
@@ -145,7 +145,7 @@
         
         // Handler for when user clicks on a request item
         function onRequestClicked(row) {
-            console.log("On Request Clicked")
+            //console.log("On Request Clicked")
             // Mark row as selected
             $(row).addClass('selected').siblings().removeClass('selected');    
             var value=$(this).find('td:first').html();

@@ -15,7 +15,16 @@
 -->
     <script src="download2.js"></script>
     <script type="text/javascript" charset="utf-8">
-       
+        jQuery(document).ready(function () {
+            
+            var status = function setStatus(status) {
+                var status = document.getElementById('connectStatus');
+                status.className = "disconnected";
+            } 
+            
+            console.log("setting statusFunc with: " + document.getElementById('connectStatus'));
+            parent.setStatus(document.getElementById('connectStatus'));
+    });
     </script>
 </head>
 <body ng-controller="webhookController" style="width:90%; padding-left:5%">
@@ -23,7 +32,7 @@
         <div class="panel-heading" style="width:100%;textalign:center"><b>WebHook Viewer</b></div>
         <h2><p id="webhood_location"></p></h2>
         <div class="container">
-            <div class="statusField" align="right">Socket Status: <div id="connectStatus" class="disconnected"></div></div>
+<!--            <div class="statusField" align="right">Socket Status: <div id="connectStatus" class="disconnected"></div></div>-->
 
             <!--
             Search: <input id="searchTarget">
