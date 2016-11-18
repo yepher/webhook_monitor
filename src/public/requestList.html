@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<head>
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Others -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+    <script src="jquery-1.7.2.min.js"></script>
+<!--
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="webhook.js"></script>
+-->
+    <script src="download2.js"></script>
+    <script type="text/javascript" charset="utf-8">
+       
+    </script>
+</head>
+<body ng-controller="webhookController" style="width:90%; padding-left:5%">
+    <div ng-app id="ng-app">
+        <div class="container">
+            Search: <input id="searchTarget">
+            <div class="requestlist">
+                
+                <div >
+                    <div title="Download events as HTTP archive" class="headerText"> Requests  <a class='archiver' id='archiver' onClick='saveHTTPArchive();'><img class='archiver' src="download_icon.png"/></a></div>
+                </div>
+                <div style="height:200px;overflow:auto;width:95%;" class="textareawrapper" id="requests">
+                    <table id="requestItems">
+                        <tr>
+                            <th>Time</th>
+                            <th>Method</th>
+                            <th>Hook Id</th>
+                            <th>Source Address</th>
+                            <th>Size</th>
+                            <th>Listeners</th>
+                      </tr>
+                        
+                    </table>
+                </div>
+            </div>
+            <br/>
+            <br/>
+        </div>
+    </div> 
+    <script>
+        var requests = { };
+        var thread = null;
+    
+        /**
+        Search for json that matches the search criterea
+        **/
+        function findData(searchData) {
+            if (searchData) {
+                console.log("findData: " + searchData)
+            }
+            
+            var table = document.getElementById("requestItems");
+            console.log("Table: " + table);
+            var rows = table.getElementsByTagName("tr");
+            console.log("rows: " + rows);
+            
+            for (idx in requests) {
+                var request = requests[idx];
+                
+                if (searchData != "" && JSON.stringify(request).indexOf(searchData) > -1){  
+                    // Row contains search string so add the found class if not already present
+                    if (!rows[idx].classList.contains('found')) {
+                        rows[idx].className += ' found'; // must have leading space
+                    }
+                } else {
+                    // Row does not contain search string so remove the found class
+                    console.log("Row[" + idx + "]: " + rows[idx]);
+                    rows[idx].classList.remove('found');
+                }
+            }
+        }
+
+        /**
+         Search entry Clears the timeout on each press, so if 1/2 second 
+         hasn't passed the func wont be executed, then set a timer for 500ms again.
+        **/
+        $('#searchTarget').keyup(function() {
+            clearTimeout(thread);
+            var $this = $(this); thread = setTimeout(function(){
+                findData($this.val())
+            }, 1000);
+        });
+        
+        var itemCount = 0;
+        var log_webhook_message = function  (message, type) {
+            itemCount++;
+            requests[itemCount] = message;
+
+            var row = $('<tr onclick="onRequestClicked(this)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
+            console.log("Add item: " + itemCount);
+            
+            var date = new Date(message.date);
+
+            $('<td />', {
+                'text': date.toString()
+            }).appendTo(row);
+
+            $('<td />', {
+                'text': message.type
+            }).appendTo(row);
+
+            $('<td />', {
+                'text': message.url
+            }).appendTo(row);
+
+            $('<td />', {
+                'text': message.remoteAddress
+            }).appendTo(row);
+
+            $('<td />', {
+                'text': message.body.length
+            }).appendTo(row);
+
+            $('<td />', {
+                'text': message.listeners
+            }).appendTo(row);
+
+
+            // Preparse payload so we can render it red in list if not valid JSON
+            try {
+                if (message.body && message.body.length > 0) {
+                    JSON.stringify(JSON.parse(message.body), null, 2);
+                }
+            } catch(e) {
+                console.log(e);
+                type = 'error';
+            }
+
+            if (type === 'system') {
+                row.css({'font-weight': 'bold'});
+            } else if (type === 'leave' || type === 'error') {
+                row.css({'font-weight': 'bold', 'color': '#F00'});
+            }
+
+            $('#searchTarget').keyup();
+        };
+        
+        // Handler for when user clicks on a request item
+        function onRequestClicked(row) {
+            console.log("On Request Clicked")
+            // Mark row as selected
+            $(row).addClass('selected').siblings().removeClass('selected');    
+            var value=$(this).find('td:first').html();
+
+            // Get selected Row ID
+            var rowId = row.id;
+            var message = requests[parseInt(rowId)];
+
+
+            var httpHeader = message.date + '\n' 
+                + 'From: ' + message.remoteAddress + '\n'
+                + 'Listeners: ' + message.listeners + '\n'
+                + '------------------------------' + '\n'
+                + message.type + ' ' + message.url  + '\n';
+
+            var propValue;
+            for(var propName in message.headers) {
+                propValue = message.headers[propName];
+                httpHeader += propName + ': '  + propValue + '\n';
+            }
+
+            var requestData = "";
+            try {
+                requestData += JSON.stringify(JSON.parse(message.body), null, 2);
+            } catch(e) {
+                requestData += '\nERROR: Failed to parse json because: ' + e + '\n\n';
+                requestData += '\n' + message.body;
+            }
+
+            var status = parent.dataFrame.document.getElementById('connectStatus');
+            var pre = parent.dataFrame.document.getElementById('httpHeaders');
+            //pre = document.getElementById('httpHeaders');
+            pre.textContent = httpHeader;
+            //$('httpHeaders').html(httpHeader);
+
+            parent.window.frames['dataFrame'].setEditor(requestData);
+        }
+
+    </script>
+</body>
+</html>

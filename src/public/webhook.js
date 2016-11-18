@@ -1,46 +1,46 @@
-var requests = { };
+//var requests = { };
 
-// Handler for when user clicks on a request item
-function onRequestClicked(row) {
-    
-    // Mark row as selected
-    $(row).addClass('selected').siblings().removeClass('selected');    
-    var value=$(this).find('td:first').html();
-    
-    // Get selected Row ID
-    var rowId = row.id;
-    var message = requests[parseInt(rowId)];
-    
-    
-    var httpHeader = message.date + '\n' 
-        + 'From: ' + message.remoteAddress + '\n'
-        + 'Listeners: ' + message.listeners + '\n'
-        + '------------------------------' + '\n'
-        + message.type + ' ' + message.url  + '\n';
-    
-    var propValue;
-    for(var propName in message.headers) {
-        propValue = message.headers[propName];
-        httpHeader += propName + ': '  + propValue + '\n';
-    }
-    
-    var requestData = "";
-    try {
-        requestData += JSON.stringify(JSON.parse(message.body), null, 2);
-    } catch(e) {
-        requestData += '\nERROR: Failed to parse json because: ' + e + '\n\n';
-        requestData += '\n' + message.body;
-    }
-
-    pre = document.getElementById('httpHeaders');
-    pre.textContent = httpHeader;
-    //$('httpHeaders').html(httpHeader);
-    
-    var editor = ace.edit("editor");
-    editor.setValue(requestData);
-    editor.session.selection.clearSelection();
-    editor.scrollToLine(0);
-}
+//// Handler for when user clicks on a request item
+//function onRequestClicked(row) {
+//    
+//    // Mark row as selected
+//    $(row).addClass('selected').siblings().removeClass('selected');    
+//    var value=$(this).find('td:first').html();
+//    
+//    // Get selected Row ID
+//    var rowId = row.id;
+//    var message = requests[parseInt(rowId)];
+//    
+//    
+//    var httpHeader = message.date + '\n' 
+//        + 'From: ' + message.remoteAddress + '\n'
+//        + 'Listeners: ' + message.listeners + '\n'
+//        + '------------------------------' + '\n'
+//        + message.type + ' ' + message.url  + '\n';
+//    
+//    var propValue;
+//    for(var propName in message.headers) {
+//        propValue = message.headers[propName];
+//        httpHeader += propName + ': '  + propValue + '\n';
+//    }
+//    
+//    var requestData = "";
+//    try {
+//        requestData += JSON.stringify(JSON.parse(message.body), null, 2);
+//    } catch(e) {
+//        requestData += '\nERROR: Failed to parse json because: ' + e + '\n\n';
+//        requestData += '\n' + message.body;
+//    }
+//
+//    pre = document.getElementById('httpHeaders');
+//    pre.textContent = httpHeader;
+//    //$('httpHeaders').html(httpHeader);
+//    
+//    var editor = ace.edit("editor");
+//    editor.setValue(requestData);
+//    editor.session.selection.clearSelection();
+//    editor.scrollToLine(0);
+//}
 
 jQuery(document).ready(function () {
     var itemCount = 0;
@@ -51,65 +51,68 @@ jQuery(document).ready(function () {
     hookId = hookId.split('#')[0];
     jQuery('#webhood_location').text('WebHook URL: ' + window.location.protocol + '//' + location.hostname + ":8080" + hookId);
     
-	var log_webhook_message = function  (message, type) {
-        itemCount++;
-        requests[itemCount] = message;
-        
-        var row = $('<tr onclick="onRequestClicked(this)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
+//	var log_webhook_message = function  (message, type) {
+//        itemCount++;
+//        requests[itemCount] = message;
+//        
+//        var row = $('<tr onclick="onRequestClicked(this)" class="requestrow"  id="' + itemCount + '" />', {}).appendTo("#requestItems");
+//
+//        var date = new Date(message.date);
+//        
+//        $('<td />', {
+//            'text': date.toString()
+//        }).appendTo(row);
+//        
+//        $('<td />', {
+//            'text': message.type
+//        }).appendTo(row);
+//        
+//        $('<td />', {
+//            'text': message.url
+//        }).appendTo(row);
+//        
+//        $('<td />', {
+//            'text': message.remoteAddress
+//        }).appendTo(row);
+//        
+//        $('<td />', {
+//            'text': message.body.length
+//        }).appendTo(row);
+//        
+//        $('<td />', {
+//            'text': message.listeners
+//        }).appendTo(row);
+//        
+//	
+//        // Preparse payload so we can render it red in list if not valid JSON
+//        try {
+//            if (message.body && message.body.length > 0) {
+//                JSON.stringify(JSON.parse(message.body), null, 2);
+//            }
+//        } catch(e) {
+//            console.log(e);
+//            type = 'error';
+//        }
+//
+//		if (type === 'system') {
+//			row.css({'font-weight': 'bold'});
+//		} else if (type === 'leave' || type === 'error') {
+//			row.css({'font-weight': 'bold', 'color': '#F00'});
+//		}
+//        
+//        $('#searchTarget').keyup();
+//    };
 
-        var date = new Date(message.date);
-        
-        $('<td />', {
-            'text': date.toString()
-        }).appendTo(row);
-        
-        $('<td />', {
-            'text': message.type
-        }).appendTo(row);
-        
-        $('<td />', {
-            'text': message.url
-        }).appendTo(row);
-        
-        $('<td />', {
-            'text': message.remoteAddress
-        }).appendTo(row);
-        
-        $('<td />', {
-            'text': message.body.length
-        }).appendTo(row);
-        
-        $('<td />', {
-            'text': message.listeners
-        }).appendTo(row);
-        
-	
-        // Preparse payload so we can render it red in list if not valid JSON
-        try {
-            if (message.body && message.body.length > 0) {
-                JSON.stringify(JSON.parse(message.body), null, 2);
-            }
-        } catch(e) {
-            console.log(e);
-            type = 'error';
-        }
-
-		if (type === 'system') {
-			row.css({'font-weight': 'bold'});
-		} else if (type === 'leave' || type === 'error') {
-			row.css({'font-weight': 'bold', 'color': '#F00'});
-		}
-        
-        $('#searchTarget').keyup();
-    };
-
-    var status = document.getElementById('connectStatus')
-    status.className = "connecting";
+    var status = parent.dataFrame.document.getElementById('connectStatus');
+    //var status = document.getElementById('connectStatus');
+    if (status != null) {
+        status.className = "connecting";
+    }
     
 	var socket = io.connect(':3000"');
     
     socket.on('requestData', function  (data) {
-		log_webhook_message(data.message, 'normal');
+		parent.window.frames['requestFrame'].log_webhook_message(data.message, 'normal');
 	});
     
     socket.on('connected', function  (data) {
@@ -118,13 +121,18 @@ jQuery(document).ready(function () {
         hookId = hookId.split('#')[0];
         socket.emit('join', {message: hookId });
         
-        var status = document.getElementById('connectStatus')
-        status.className = "connected";
+        var status = parent.dataFrame.document.getElementById('connectStatus');
+        //var status = document.getElementById('connectStatus')
+        if (status != null) {
+            status.className = "connected";
+        }
 	});
     
     socket.on('disconnect', function  (data) {
 		console.log("web socekt Disconnected")
-        var status = document.getElementById('connectStatus')
+        
+        var status = parent.dataFrame.document.getElementById('connectStatus');
+        //var status = document.getElementById('connectStatus')
         status.className = "disconnected";
 	});
 });
@@ -139,7 +147,7 @@ function setGetParameter() {
         } else {
             url += "&" + hookId + "=" + Math.floor((Math.random() * 1000000) + 1);
         }
-        
+        console.log("URL: " + url);
         window.location.href = url;
     }
     
@@ -179,6 +187,7 @@ function saveHTTPArchive() {
     
     var i = 0;
     var entries = [];
+    var requests = parent.window.frames['requestFrame'].requests;
     for (idx in requests) {
         var request = requests[idx];
         
