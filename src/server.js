@@ -26,6 +26,7 @@ http.createServer(function (request, response) {
     host = host.replace("8080", "3000");
     
     var webhookId = "/" +  request.url.split("/")[1];
+    webhookId = "/" +  request.url.split("?")[0];
     console.log("WebhookID: " + webhookId);
     
     var formOutput = '<html><body>'
